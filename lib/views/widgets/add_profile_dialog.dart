@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teams_multi_instances/bloc/process_provider.dart';
+import 'package:teams_multi_instances/bloc/profile_provider.dart';
 import 'package:teams_multi_instances/models/profile_model.dart';
-import 'package:teams_multi_instances/providers/process_provider.dart';
-import 'package:teams_multi_instances/providers/profile_provider.dart';
 import 'package:teams_multi_instances/views/utils/error_snack_bar.dart';
 
 class AddProfileDialog extends StatelessWidget {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teams_multi_instances/providers/process_provider.dart';
-import 'package:teams_multi_instances/providers/profile_provider.dart';
 import 'package:teams_multi_instances/views/home_screen.dart';
+
+import 'bloc/process_provider.dart';
+import 'bloc/profile_provider.dart';
 
 void main() {
   runApp(const App());

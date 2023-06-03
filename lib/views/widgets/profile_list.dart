@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teams_multi_instances/providers/profile_provider.dart';
+import 'package:teams_multi_instances/bloc/profile_provider.dart';
 import 'package:teams_multi_instances/views/widgets/profile_list_item.dart';
 
 class ProfileList extends StatelessWidget {
