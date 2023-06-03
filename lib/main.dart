@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
+import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
 import 'package:teams_multi_instances/views/home_screen.dart';
-
+import 'package:teams_multi_instances/injection.dart' as injection;
 import 'bloc/process_provider.dart';
 import 'bloc/profile_provider.dart';
+import 'injection.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await injection.init();
   runApp(const App());
 }
 
@@ -14,10 +21,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ProfileProvider()..init()),
-        ChangeNotifierProvider(create: (context) => ProcessProvider()..init()),
+        BlocProvider(
+            create: (context) => getIt<ProfileBloc>()..add(ProfileListEvent())),
+        BlocProvider(
+            create: (context) => getIt<ProcessBloc>()..add(ProcessInitEvent())),
       ],
       child: MaterialApp(
         title: 'Multi Teams Instances',
