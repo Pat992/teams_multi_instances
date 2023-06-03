@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teams_multi_instances/models/profile_model.dart';
+import 'package:teams_multi_instances/providers/process_provider.dart';
 import 'package:teams_multi_instances/providers/profile_provider.dart';
 
 class DeleteProfileDialog extends StatelessWidget {
@@ -24,6 +25,8 @@ class DeleteProfileDialog extends StatelessWidget {
         ),
         FilledButton(
           onPressed: () {
+            Provider.of<ProcessProvider>(context, listen: false)
+                .removeDirectory(directory: profileModel.profileFolder);
             Provider.of<ProfileProvider>(context, listen: false)
                 .removeProfile(profileModel: profileModel);
             Navigator.of(context).pop();

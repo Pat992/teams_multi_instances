@@ -16,8 +16,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ProfileProvider()..init()),
-        ChangeNotifierProvider(
-            create: (context) => ProcessProvider()..getTeamsBaseDirectory()),
+        ChangeNotifierProvider(create: (context) => ProcessProvider()..init()),
       ],
       child: MaterialApp(
         title: 'Multi Teams Instances',

@@ -17,42 +17,48 @@ class ProfileListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       key: Key(profileModel.id),
-      child: ListTile(
-        leading: const Icon(Icons.account_circle),
-        title: Text(profileModel.profileName),
-        subtitle: Text('Directory: ${profileModel.profileFolder}'),
-        trailing: SizedBox(
-          width: 80,
-          child: Row(
-            children: [
-              Provider.of<ProcessProvider>(context).isLoading
-                  ? const SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(),
+      child: InkWell(
+        onTap: () => Provider.of<ProcessProvider>(context, listen: false)
+            .launchTeamsInstance(
+          directory: profileModel.profileFolder,
+        ),
+        child: ListTile(
+          leading: const Icon(Icons.account_circle),
+          title: Text(profileModel.profileName),
+          subtitle: Text('Directory: ${profileModel.profileFolder}'),
+          trailing: SizedBox(
+            width: 80,
+            child: Row(
+              children: [
+                Provider.of<ProcessProvider>(context).isLoading
+                    ? const SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.folder),
+                        onPressed: () =>
+                            Provider.of<ProcessProvider>(context, listen: false)
+                                .openDirectory(
+                          directory: profileModel.profileFolder,
+                        ),
                       ),
-                    )
-                  : IconButton(
-                      icon: const Icon(Icons.folder),
-                      onPressed: () =>
-                          Provider.of<ProcessProvider>(context, listen: false)
-                              .openDirectory(
-                        directory: profileModel.profileFolder,
-                      ),
-                    ),
-              IconButton(
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
+                IconButton(
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onPressed: () => DialogOpener.openDialog(
+                    dialog: DeleteProfileDialog(profileModel: profileModel),
+                    context: context,
+                  ),
                 ),
-                onPressed: () => DialogOpener.openDialog(
-                  dialog: DeleteProfileDialog(profileModel: profileModel),
-                  context: context,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
