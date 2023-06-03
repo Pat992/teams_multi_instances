@@ -24,6 +24,8 @@ class ProcessProvider with ChangeNotifier implements IProcessProvider {
   String teamsBaseDirectory = '';
   String teamsExecuteDirectory = '';
 
+  ProcessProvider();
+
   @override
   Future<void> init() async {
     isLoading = true;
@@ -149,16 +151,61 @@ class ProcessProvider with ChangeNotifier implements IProcessProvider {
   @override
   Future<void> launchTeamsInstance({required String directory}) async {
     try {
+      final startingCommand =
+          '$teamsExecuteDirectory\\Update.exe --processStart "Teams.exe"';
+
+      final setUserProfile = 'SET "USERPROFILE=$directory\\%~n0"';
+
+      final String executeCommand = '''
+SET "USERPROFILE=$directory\\%~n0"
+ECHO %USERPROFILE%
+$teamsExecuteDirectory\\Update.exe --processStart "Teams.exe"
+''';
+      print(startingCommand);
+      final String pShellCommand = '''
+\$Env:USERPROFILE="$directory\\%~n0"
+$teamsExecuteDirectory\\Update.exe --processStart "Teams.exe"
+''';
+
+      // print(startingCommand);
+      // print(setUserProfile);
+      // print(directory);
       errorMessage = '';
       isLoading = true;
       notifyListeners();
-      print(teamsExecuteDirectory);
+
+      // final res = await shell.run('''
+      //   SET "gaga=C:\\Users\\phettich\\AppData\\Local\\Microsoft\\Teams\\workyoushit\\%~n0" &&
+      //   echo %gaga%
+      // ''');
+//       final res = await Process.run(
+//         '''
+// SET "USERPROFILE=C:\\Users\\phettich\\AppData\\Local\\Microsoft\\Teams\\workyoushit\\%~n0"
+// echo %USERPROFILE%
+// ''',
+//         [],
+//       );
+
       final res = await Process.run(
-        'SET "USERPROFILE"=$directory\\%~n0 | $teamsExecuteDirectory\\Update.exe --processStart "Teams.exe"',
-        [],
-        runInShell: true,
+        'powershell',
+        [
+          //'args',
+          //setUserProfile,
+          pShellCommand,
+        ],
       );
 
+      // final res = await Process.run(
+      //   'cmd',
+      //   [
+      //     'args',
+      //     executeCommand,
+      //     // 'echo %USERPROFILE%',
+      //   ],
+      // );
+
+      print(res.stderr);
+      print(res.stdout);
       if (res.stderr != null && res.stderr != '') {
         throw Exception();
       }
