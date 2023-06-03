@@ -10,6 +10,8 @@ part 'process_event.dart';
 part 'process_state.dart';
 
 class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
+  final List<ProfileModel> profileModels = [];
+
   ProcessBloc() : super(ProcessInitial()) {
     on<ProcessInitEvent>((event, emit) async {
       try {
@@ -17,7 +19,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
 
         final res = await Process.run(
           'powershell',
-          [r'Write-Output($env:LOCALAPPDATA)'],
+          [r'Write-Output("$env:LOCALAPPDATA\Microsoft\Teams")'],
         );
 
         if (res.stderr != null && res.stderr != '') {
@@ -68,11 +70,10 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
           'powershell',
           ['mkdir ${event.profileModel.profileFolder}'],
         );
-
         if (res.stderr != null && res.stderr != '') {
           throw Exception();
         }
-        emit(ProcessSuccessState());
+        emit(ProcessMakeDirectorySuccessState());
       } catch (e) {
         emit(
           ProcessFailureState(
@@ -96,7 +97,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         if (res.stderr != null && res.stderr != '') {
           throw Exception();
         }
-        emit(ProcessSuccessState());
+        emit(ProcessRemoveDirectorySuccessState());
       } catch (e) {
         emit(
           ProcessFailureState(

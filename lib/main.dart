@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
 import 'package:teams_multi_instances/views/home_screen.dart';
 import 'package:teams_multi_instances/injection.dart' as injection;
-import 'bloc/process_provider.dart';
-import 'bloc/profile_provider.dart';
 import 'injection.dart';
 
 void main() async {

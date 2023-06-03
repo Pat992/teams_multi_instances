@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:teams_multi_instances/bloc/profile_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
+import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
 import 'package:teams_multi_instances/views/utils/dialog_opener.dart';
 import 'package:teams_multi_instances/views/widgets/profile_list.dart';
 import 'package:teams_multi_instances/views/widgets/add_profile_dialog.dart';
@@ -10,18 +11,32 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Provider.of<ProfileProvider>(context).isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : const ProfileList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => DialogOpener.openDialog(
-          context: context,
-          dialog: const AddProfileDialog(),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ProfileBloc, ProfileState>(listener: (context, state) {}),
+        BlocListener<ProcessBloc, ProcessState>(listener: (context, state) {}),
+      ],
+      child: Scaffold(
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is ProfileLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is ProfileSuccessState) {
+              return const ProfileList();
+            } else {
+              return const SizedBox();
+            }
+          },
         ),
-        child: const Icon(Icons.add),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => DialogOpener.openDialog(
+            context: context,
+            dialog: const AddProfileDialog(),
+          ),
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

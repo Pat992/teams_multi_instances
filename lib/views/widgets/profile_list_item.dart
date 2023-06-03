@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:teams_multi_instances/bloc/process_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/models/profile_model.dart';
 import 'package:teams_multi_instances/views/utils/dialog_opener.dart';
 import 'package:teams_multi_instances/views/widgets/delete_profile_dialog.dart';
@@ -19,9 +19,8 @@ class ProfileListItem extends StatelessWidget {
       key: Key(profileModel.id),
       child: InkWell(
         mouseCursor: SystemMouseCursors.click,
-        onTap: () => Provider.of<ProcessProvider>(context, listen: false)
-            .launchTeamsInstance(
-          directory: profileModel.profileFolder,
+        onTap: () => BlocProvider.of<ProcessBloc>(context, listen: false).add(
+          ProcessLaunchTeamsEvent(profileModel: profileModel),
         ),
         child: ListTile(
           mouseCursor: SystemMouseCursors.click,
@@ -32,23 +31,13 @@ class ProfileListItem extends StatelessWidget {
             width: 80,
             child: Row(
               children: [
-                Provider.of<ProcessProvider>(context).isLoading
-                    ? const SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : IconButton(
-                        icon: const Icon(Icons.folder),
-                        onPressed: () =>
-                            Provider.of<ProcessProvider>(context, listen: false)
-                                .openDirectory(
-                          directory: profileModel.profileFolder,
-                        ),
-                      ),
+                IconButton(
+                  icon: const Icon(Icons.folder),
+                  onPressed: () =>
+                      BlocProvider.of<ProcessBloc>(context, listen: false).add(
+                    ProcessOpenDirectoryEvent(profileModel: profileModel),
+                  ),
+                ),
                 IconButton(
                   icon: const Icon(
                     Icons.delete,

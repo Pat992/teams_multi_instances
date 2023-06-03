@@ -10,19 +10,19 @@ class ProfileListEvent extends ProfileEvent {
 }
 
 class ProfileAddEvent extends ProfileEvent {
-  final List<ProfileModel> profileModels;
+  final ProfileModel profileModel;
 
-  const ProfileAddEvent({required this.profileModels});
+  const ProfileAddEvent({required this.profileModel});
 
   @override
-  List<Object?> get props => [profileModels];
+  List<Object?> get props => [profileModel];
 }
 
 class ProfileRemoveEvent extends ProfileEvent {
-  final List<ProfileModel> profileModels;
+  final ProfileModel profileModel;
 
-  const ProfileRemoveEvent({required this.profileModels});
+  const ProfileRemoveEvent({required this.profileModel});
 
   @override
-  List<Object?> get props => [profileModels];
+  List<Object?> get props => [profileModel];
 }

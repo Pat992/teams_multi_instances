@@ -36,3 +36,13 @@ class ProcessSuccessState extends ProcessState {
   @override
   List<Object?> get props => [];
 }
+
+class ProcessMakeDirectorySuccessState extends ProcessState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProcessRemoveDirectorySuccessState extends ProcessState {
+  @override
+  List<Object?> get props => [];
+}

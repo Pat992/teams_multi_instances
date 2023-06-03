@@ -14,6 +14,7 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final SharedPreferences sharedPreferences;
   final key = 'teams_profiles';
+  List<ProfileModel> profileModels = [];
 
   List<String> toList({required List<ProfileModel> profileModels}) {
     final List<String> profileStringList = [];
@@ -39,7 +40,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileListEvent>((event, emit) async {
       try {
         emit(ProfileLoadingState());
-        final List<ProfileModel> profileModels = [];
         final profilesFromShPr = sharedPreferences.getStringList(key);
         final profilesFuture = await Future.value(profilesFromShPr ?? []);
 
@@ -50,6 +50,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             ),
           );
         }
+
         emit(ProfileSuccessState(profileModels: profileModels));
       } catch (e) {
         emit(
@@ -66,9 +67,37 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileAddEvent>((event, emit) async {
       try {
         emit(ProfileLoadingState());
-        final profileStringList = toList(profileModels: event.profileModels);
+
+        final profileFromExisting = profileModels.firstWhere(
+            (element) => element.id == event.profileModel.id,
+            orElse: () =>
+                ProfileModel(id: '', profileName: '', profileFolder: ''));
+
+        if (event.profileModel.profileName.isEmpty) {
+          emit(
+            const ProfileFailureState(
+              failureModel: FailureModel(
+                title: 'Empty profile name',
+                description: 'The profile name needs to be set.',
+              ),
+            ),
+          );
+          return;
+        } else if (profileFromExisting.id.isNotEmpty) {
+          ProfileFailureState(
+            failureModel: FailureModel(
+              title: 'Profile id ${event.profileModel.id} existing',
+              description:
+                  'The profile name needs to be unique after removing special characters and spaces to create a new folder.',
+            ),
+          );
+          return;
+        }
+
+        profileModels.add(event.profileModel);
+        final profileStringList = toList(profileModels: profileModels);
         await writeProfiles(profileStringList: profileStringList);
-        emit(ProfileSuccessState(profileModels: event.profileModels));
+        emit(ProfileSuccessState(profileModels: profileModels));
       } catch (e) {
         emit(
           ProfileFailureState(
@@ -84,9 +113,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileRemoveEvent>((event, emit) async {
       try {
         emit(ProfileLoadingState());
-        final profileStringList = toList(profileModels: event.profileModels);
+
+        profileModels.remove(event.profileModel);
+        final profileStringList = toList(profileModels: profileModels);
         await writeProfiles(profileStringList: profileStringList);
-        emit(ProfileSuccessState(profileModels: event.profileModels));
+        emit(ProfileSuccessState(profileModels: profileModels));
       } catch (e) {
         emit(
           ProfileFailureState(
