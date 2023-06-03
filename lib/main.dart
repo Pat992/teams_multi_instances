@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teams_multi_instances/providers/process_provider.dart';
 import 'package:teams_multi_instances/providers/profile_provider.dart';
 import 'package:teams_multi_instances/views/home_screen.dart';
 
@@ -14,7 +15,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ProfileProvider()..init())
+        ChangeNotifierProvider(create: (context) => ProfileProvider()..init()),
+        ChangeNotifierProvider(
+            create: (context) => ProcessProvider()..getTeamsBaseDirectory()),
       ],
       child: MaterialApp(
         title: 'Multi Teams Instances',

@@ -29,6 +29,7 @@ class ProfileProvider with ChangeNotifier implements IProfileProvider {
       errorMessage = '';
       isLoading = true;
       notifyListeners();
+
       sharedPreferences = await SharedPreferences.getInstance();
       final profilesFromShPr = sharedPreferences.getStringList(key);
       final profilesFuture = await Future.value(profilesFromShPr ?? []);
@@ -54,6 +55,7 @@ class ProfileProvider with ChangeNotifier implements IProfileProvider {
       errorMessage = '';
       isLoading = true;
       notifyListeners();
+
       profiles.add(profileModel);
       final profileStringList = toList();
       await writeProfiles(profileStringList: profileStringList);
@@ -71,6 +73,7 @@ class ProfileProvider with ChangeNotifier implements IProfileProvider {
       errorMessage = '';
       isLoading = true;
       notifyListeners();
+
       profiles.remove(profileModel);
       final profileStringList = toList();
       await writeProfiles(profileStringList: profileStringList);

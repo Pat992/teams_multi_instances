@@ -1,35 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teams_multi_instances/models/profile_model.dart';
+import 'package:teams_multi_instances/providers/process_provider.dart';
 import 'package:teams_multi_instances/providers/profile_provider.dart';
 import 'package:teams_multi_instances/views/utils/error_snack_bar.dart';
 
 class AddProfileDialog extends StatelessWidget {
   const AddProfileDialog({Key? key}) : super(key: key);
 
-  void addProfile(
-      {required String profileName, required BuildContext context}) {
+  void addProfile({
+    required String profileName,
+    required String baseDirectory,
+    required BuildContext context,
+  }) {
+    String id = profileName.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+
+    final profiles =
+        Provider.of<ProfileProvider>(context, listen: false).profiles;
+    final profileFromExisting = profiles.firstWhere(
+      (element) => element.id == id,
+      orElse: () => ProfileModel(id: '', profileName: '', profileFolder: ''),
+    );
+
     if (profileName.isEmpty) {
       ErrorSnackBar.openSnackBar(
         context: context,
         title: 'Empty profile name',
         description: 'The profile name needs to be set.',
       );
+    } else if (profileFromExisting.id.isNotEmpty) {
+      ErrorSnackBar.openSnackBar(
+        context: context,
+        title: 'Profile id $id existing',
+        description:
+            'The profile name needs to be unique after removing special characters and spaces to create a new folder.',
+      );
     } else {
-      String id = profileName.replaceAll(RegExp('[^A-Za-z0-9]'), '');
       final profileModel = ProfileModel(
         id: id,
         profileName: profileName,
-        profileFolder: id,
+        profileFolder: '$baseDirectory\\$id',
       );
+      Provider.of<ProcessProvider>(context, listen: false)
+          .makeDirectory(directory: profileModel.profileFolder);
+
       Provider.of<ProfileProvider>(context, listen: false)
           .addProfile(profileModel: profileModel);
+
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    String teamsBaseDirectory =
+        Provider.of<ProcessProvider>(context).teamsBaseDirectory;
     String profileName = '';
 
     return AlertDialog(
@@ -54,7 +79,10 @@ class AddProfileDialog extends StatelessWidget {
             ),
             FilledButton(
               onPressed: () {
-                addProfile(profileName: profileName, context: context);
+                addProfile(
+                    profileName: profileName,
+                    baseDirectory: teamsBaseDirectory,
+                    context: context);
               },
               child: const Text('Confirm'),
             ),
