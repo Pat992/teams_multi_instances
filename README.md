@@ -4,10 +4,38 @@
 </div>
 
 <div align="center">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="50" role="img" aria-label="Download"><title>Download</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="150" height="50" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="0" height="50" fill="#dfb317"/><rect x="0" width="150" height="50" fill="#dfb317"/><rect width="150" height="50" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="210"><text x="750" y="320" transform="scale(.1)" fill="#fff" textLength="1100">Download</text></g></svg>
+<a href="https://github.com/Pat992/teams_multi_instances/releases/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="50" role="img" aria-label="Download"><title>Download</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="150" height="50" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="0" height="50" fill="#dfb317"/><rect x="0" width="150" height="50" fill="#dfb317"/><rect width="150" height="50" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="210"><text x="750" y="320" transform="scale(.1)" fill="#fff" textLength="1100">Download</text></g></svg></a>
 </div>
 
-## About
+<div align="center">
+<table>
+    <tr>
+        <th>App</th>
+        <th>Themes</th>
+    </tr>
+    <tr>
+        <td><img src="/docs/images/App.png" width="500" /></td>
+        <td><img src="/docs/images/Themes.png" width="500" /></td>
+    </tr>
+</table>
+</div>
+
+## Introduction
+Multi Teams Launcher is an app that enables you to open multiple instances of Microsoft Teams and log in with different accounts. The app offers features such as creating new instances, managing accounts, and personalization options.
+
+## Features
+- Open multiple instances of Microsoft Teams.
+- Log in with different accounts.
+- Manage profiles:
+    - View profile settings directory.
+    - Delete profiles.
+- Start specific Teams instances or all instances together.
+- Personalization options:
+    - Dark and light mode.
+    - Multiple color themes.
+
+## Bugs and feature requests
+Please file feature requests and bugs at the [issue tracker](https://github.com/Pat992/teams_multi_instances/issues)
 
 ## Support
 If this project helps you, you can buy me a coffee.
