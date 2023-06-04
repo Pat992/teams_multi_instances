@@ -31,14 +31,12 @@ class AddProfileDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String teamsBaseDirectory = '';
+    String teamsBaseDirectory =
+        BlocProvider.of<ProcessBloc>(context).teamBaseDirectory;
     String profileName = '';
-
     return BlocBuilder<ProcessBloc, ProcessState>(
       builder: (context, state) {
-        if (state is ProcessGetTeamsBaseDirectoryState) {
-          teamsBaseDirectory = state.path;
-        } else if (state is ProcessMakeDirectorySuccessState) {
+        if (state is ProcessMakeDirectorySuccessState) {
           final profileModel = createProfile(
             profileName: profileName,
             baseDirectory: teamsBaseDirectory,
@@ -46,9 +44,8 @@ class AddProfileDialog extends StatelessWidget {
 
           BlocProvider.of<ProcessBloc>(context, listen: false)
               .add(ProcessInitEvent());
-          BlocProvider.of<ProfileBloc>(context, listen: false).add(
-            ProfileAddEvent(profileModel: profileModel),
-          );
+          BlocProvider.of<ProfileBloc>(context, listen: false)
+              .add(ProfileAddEvent(profileModel: profileModel));
 
           Navigator.of(context).pop();
         }

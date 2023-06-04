@@ -4,6 +4,7 @@ import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
 import 'package:teams_multi_instances/views/home_screen.dart';
 import 'package:teams_multi_instances/injection.dart' as injection;
+import 'bloc/theme/theme_bloc.dart';
 import 'injection.dart';
 
 void main() async {
@@ -18,20 +19,48 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkTheme = false;
+    Color seedColor = Colors.deepPurple;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => getIt<ProfileBloc>()..add(ProfileListEvent())),
+            create: (context) =>
+            getIt<ThemeBloc>()
+              ..add(ThemeInitEvent())),
         BlocProvider(
-            create: (context) => getIt<ProcessBloc>()..add(ProcessInitEvent())),
+            create: (context) =>
+            getIt<ProfileBloc>()
+              ..add(ProfileListEvent())),
+        BlocProvider(
+            create: (context) =>
+            getIt<ProcessBloc>()
+              ..add(ProcessInitEvent())),
       ],
-      child: MaterialApp(
-        title: 'Multi Teams Instances',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: const HomeScreen(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          if (state is ThemeSuccessState) {
+            isDarkTheme = state.themeModel.isDarkTheme;
+            seedColor = state.themeModel.color;
+          }
+          return MaterialApp(
+            title: 'Multi Teams Instances',
+            theme: ThemeData(
+              bottomNavigationBarTheme: isDarkTheme && seedColor != Colors.black
+                  ? BottomNavigationBarThemeData(
+                selectedItemColor: seedColor,
+              )
+                  : null,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: seedColor,
+                brightness:
+                isDarkTheme == true ? Brightness.dark : Brightness.light,
+              ),
+              useMaterial3: true,
+            ),
+            home: const HomeScreen(),
+          );
+        },
       ),
     );
   }

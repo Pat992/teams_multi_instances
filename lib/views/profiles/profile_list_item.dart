@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/models/profile_model.dart';
 import 'package:teams_multi_instances/views/utils/dialog_opener.dart';
-import 'package:teams_multi_instances/views/widgets/delete_profile_dialog.dart';
+
+import 'delete_profile_dialog.dart';
 
 class ProfileListItem extends StatelessWidget {
   final ProfileModel profileModel;

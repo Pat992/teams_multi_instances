@@ -10,7 +10,7 @@ part 'process_event.dart';
 part 'process_state.dart';
 
 class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
-  final List<ProfileModel> profileModels = [];
+  String teamBaseDirectory = '';
 
   ProcessBloc() : super(ProcessInitial()) {
     on<ProcessInitEvent>((event, emit) async {
@@ -23,10 +23,11 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         );
 
         if (res.stderr != null && res.stderr != '') {
-          throw Exception();
+          throw Exception(res.stderr);
         }
         final String resStr = res.stdout;
-        emit(ProcessGetTeamsBaseDirectoryState(path: resStr.trim()));
+        teamBaseDirectory = resStr.trim();
+        emit(ProcessGetTeamsBaseDirectoryState(path: teamBaseDirectory));
       } catch (e) {
         emit(
           ProcessFailureState(
@@ -48,7 +49,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         );
 
         if (res.stderr != null && res.stderr != '') {
-          throw Exception();
+          throw Exception(res.stderr);
         }
         emit(ProcessSuccessState());
       } catch (e) {
@@ -66,12 +67,24 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
       try {
         emit(ProcessLoadingState());
 
+        if (event.profileModel.profileName.isEmpty) {
+          emit(
+            const ProcessFailureState(
+              failureModel: FailureModel(
+                title: 'Empty profile name',
+                description: 'The profile name needs to be set.',
+              ),
+            ),
+          );
+          return;
+        }
+
         final res = await Process.run(
           'powershell',
           ['mkdir ${event.profileModel.profileFolder}'],
         );
         if (res.stderr != null && res.stderr != '') {
-          throw Exception();
+          throw Exception(res.stderr);
         }
         emit(ProcessMakeDirectorySuccessState());
       } catch (e) {
@@ -95,7 +108,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         );
 
         if (res.stderr != null && res.stderr != '') {
-          throw Exception();
+          throw Exception(res.stderr);
         }
         emit(ProcessRemoveDirectorySuccessState());
       } catch (e) {
@@ -127,7 +140,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         );
 
         if (res.stderr != null && res.stderr != '') {
-          throw Exception();
+          throw Exception(res.stderr);
         }
 
         emit(ProcessSuccessState());

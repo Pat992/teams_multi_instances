@@ -32,7 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final res = await sharedPreferences.setStringList(key, profileStringList);
 
     if (!res) {
-      throw Exception();
+      throw Exception('Could not save profile.');
     }
   }
 
@@ -67,32 +67,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileAddEvent>((event, emit) async {
       try {
         emit(ProfileLoadingState());
-
-        final profileFromExisting = profileModels.firstWhere(
-            (element) => element.id == event.profileModel.id,
-            orElse: () =>
-                ProfileModel(id: '', profileName: '', profileFolder: ''));
-
-        if (event.profileModel.profileName.isEmpty) {
-          emit(
-            const ProfileFailureState(
-              failureModel: FailureModel(
-                title: 'Empty profile name',
-                description: 'The profile name needs to be set.',
-              ),
-            ),
-          );
-          return;
-        } else if (profileFromExisting.id.isNotEmpty) {
-          ProfileFailureState(
-            failureModel: FailureModel(
-              title: 'Profile id ${event.profileModel.id} existing',
-              description:
-                  'The profile name needs to be unique after removing special characters and spaces to create a new folder.',
-            ),
-          );
-          return;
-        }
 
         profileModels.add(event.profileModel);
         final profileStringList = toList(profileModels: profileModels);
