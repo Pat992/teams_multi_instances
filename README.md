@@ -14,8 +14,8 @@
         <th>Themes</th>
     </tr>
     <tr>
-        <td><img src="/docs/images/App.png" width="500" /></td>
-        <td><img src="/docs/images/Themes.png" width="500" /></td>
+        <td><img src="/docs/images/App.png" width="700" /></td>
+        <td><img src="/docs/images/Themes.png" width="700" /></td>
     </tr>
 </table>
 </div>
