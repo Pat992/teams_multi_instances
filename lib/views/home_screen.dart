@@ -35,10 +35,14 @@ class HomeScreen extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: const Row(
+          title: Row(
             children: [
-              Icon(Icons.account_circle),
-              Text('Multi Teams Launcher'),
+              Image.asset(
+                'assets/images/Icon.png',
+                height: 50,
+              ),
+              const SizedBox(width: 10),
+              const Text('Multi Teams Launcher'),
             ],
           ),
         ),
