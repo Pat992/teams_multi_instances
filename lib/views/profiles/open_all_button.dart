@@ -15,15 +15,19 @@ class OpenAllButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomLeft,
-      child: ElevatedButton(
-        onPressed: () {
-          for (final profileModel in profileModels) {
-            BlocProvider.of<ProcessBloc>(context).add(
-              ProcessLaunchTeamsEvent(profileModel: profileModel),
-            );
-          }
-        },
-        child: const Text('Open all'),
+      child: Tooltip(
+        waitDuration: const Duration(seconds: 1),
+        message: 'Open Teams instances for all saved profiles',
+        child: ElevatedButton(
+          onPressed: () {
+            for (final profileModel in profileModels) {
+              BlocProvider.of<ProcessBloc>(context).add(
+                ProcessLaunchTeamsEvent(profileModel: profileModel),
+              );
+            }
+          },
+          child: const Text('Open all'),
+        ),
       ),
     );
   }

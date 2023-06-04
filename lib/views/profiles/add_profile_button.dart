@@ -8,12 +8,16 @@ class AddProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => DialogOpener.openDialog(
-        context: context,
-        dialog: const AddProfileDialog(),
+    return Tooltip(
+      waitDuration: const Duration(seconds: 1),
+      message: 'Add a new Teams profile',
+      child: FloatingActionButton(
+        onPressed: () => DialogOpener.openDialog(
+          context: context,
+          dialog: const AddProfileDialog(),
+        ),
+        child: const Icon(Icons.add),
       ),
-      child: const Icon(Icons.add),
     );
   }
 }
