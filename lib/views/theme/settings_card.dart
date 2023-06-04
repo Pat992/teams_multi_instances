@@ -21,7 +21,7 @@ class SettingsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SubHeader(text: title),
-            const SizedBox(height: 10),
+            const SizedBox(height: 6),
             child,
           ],
         ),
