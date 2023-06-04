@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
-import 'package:teams_multi_instances/views/utils/dialog_opener.dart';
+import 'package:teams_multi_instances/views/widgets/add_profile_button.dart';
 import 'package:teams_multi_instances/views/widgets/profile_list.dart';
-import 'package:teams_multi_instances/views/widgets/add_profile_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,13 +29,7 @@ class HomeScreen extends StatelessWidget {
             }
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => DialogOpener.openDialog(
-            context: context,
-            dialog: const AddProfileDialog(),
-          ),
-          child: const Icon(Icons.add),
-        ),
+        floatingActionButton: const AddProfileButton(),
       ),
     );
   }
