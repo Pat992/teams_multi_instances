@@ -115,7 +115,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         emit(
           ProcessFailureState(
             failureModel: FailureModel(
-                title: 'Error creating profile directory',
+                title: 'Error removing profile directory',
                 description: e.toString()),
           ),
         );
@@ -155,8 +155,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         emit(
           ProcessFailureState(
             failureModel: FailureModel(
-                title: 'Error creating profile directory',
-                description: e.toString()),
+                title: 'Error launching Teams', description: e.toString()),
           ),
         );
       }

@@ -19,43 +19,56 @@ class ProfileListItem extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       key: Key(profileModel.id),
-      child: InkWell(
-        mouseCursor: SystemMouseCursors.click,
-        onTap: () => BlocProvider.of<ProcessBloc>(context, listen: false).add(
-          ProcessLaunchTeamsEvent(profileModel: profileModel),
-        ),
-        child: ListTile(
+      child: Tooltip(
+        waitDuration: const Duration(seconds: 1),
+        message: 'Click to open Teams with this profile',
+        child: InkWell(
           mouseCursor: SystemMouseCursors.click,
-          leading: const Icon(Icons.account_circle),
-          title: Text(profileModel.profileName),
-          subtitle: profileModel.id != 'main_profile'
-              ? Text('Directory: ${profileModel.profileFolder}')
-              : null,
-          trailing: SizedBox(
-            width: 80,
-            child: Row(
-              children: [
-                if (profileModel.id != 'main_profile')
-                  IconButton(
-                    icon: const Icon(Icons.folder),
-                    onPressed: () =>
-                        BlocProvider.of<ProcessBloc>(context, listen: false)
-                            .add(
-                      ProcessOpenDirectoryEvent(profileModel: profileModel),
+          onTap: () => BlocProvider.of<ProcessBloc>(context, listen: false).add(
+            ProcessLaunchTeamsEvent(profileModel: profileModel),
+          ),
+          child: ListTile(
+            mouseCursor: SystemMouseCursors.click,
+            leading: const Icon(Icons.account_circle),
+            title: Text(profileModel.profileName),
+            subtitle: profileModel.id != 'main_profile'
+                ? Text('Directory: ${profileModel.profileFolder}')
+                : null,
+            trailing: SizedBox(
+              width: 80,
+              child: Row(
+                children: [
+                  if (profileModel.id != 'main_profile')
+                    Tooltip(
+                      waitDuration: const Duration(seconds: 1),
+                      message: 'Open profile data directory in explorer',
+                      child: IconButton(
+                        icon: const Icon(Icons.folder),
+                        onPressed: () =>
+                            BlocProvider.of<ProcessBloc>(context, listen: false)
+                                .add(
+                          ProcessOpenDirectoryEvent(profileModel: profileModel),
+                        ),
+                      ),
                     ),
-                  ),
-                if (profileModel.id != 'main_profile')
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
+                  if (profileModel.id != 'main_profile')
+                    Tooltip(
+                      waitDuration: const Duration(seconds: 1),
+                      message: 'Delete this profile, make sure Teams is closed',
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        onPressed: () => DialogOpener.openDialog(
+                          dialog:
+                              DeleteProfileDialog(profileModel: profileModel),
+                          context: context,
+                        ),
+                      ),
                     ),
-                    onPressed: () => DialogOpener.openDialog(
-                      dialog: DeleteProfileDialog(profileModel: profileModel),
-                      context: context,
-                    ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
