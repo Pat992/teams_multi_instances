@@ -33,9 +33,14 @@ jobs:
           type: 'zip'
           filename: teams_multi_instances-${{github.ref_name}}-windows.zip
           directory: build/windows/runner/Release
+      - name: Generate release tag
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::MultiTeamsLauncher_$(date +"%Y.%m.%d")"
       - name: Windows Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: ${{ steps.tag.outputs.release_tag }}
           files: build/windows/runner/Release/teams_multi_instances-${{github.ref_name}}-windows.zip
