@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
 import 'package:teams_multi_instances/models/profile_model.dart';
+import 'package:teams_multi_instances/views/profiles/open_all_button.dart';
 import 'package:teams_multi_instances/views/profiles/profile_list_item.dart';
+import 'package:teams_multi_instances/views/text/header.dart';
 
 class ProfileList extends StatelessWidget {
   const ProfileList({Key? key}) : super(key: key);
@@ -22,23 +23,22 @@ class ProfileList extends StatelessWidget {
           ];
 
           profileModels.addAll(state.profileModels);
-          return Column(
+          return Stack(
+            fit: StackFit.loose,
             children: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: profileModels.length,
-                itemBuilder: (context, index) =>
-                    ProfileListItem(profileModel: profileModels[index]),
+              ListView(
+                children: [
+                  const Center(child: Header(text: 'Teams Profiles')),
+                  const SizedBox(height: 16),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: profileModels.length,
+                    itemBuilder: (context, index) =>
+                        ProfileListItem(profileModel: profileModels[index]),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    for (final profileModel in profileModels) {
-                      BlocProvider.of<ProcessBloc>(context).add(
-                        ProcessLaunchTeamsEvent(profileModel: profileModel),
-                      );
-                    }
-                  },
-                  child: Text('Open all'))
+              OpenAllButton(profileModels: profileModels),
             ],
           );
         } else {

@@ -138,7 +138,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         Start-Process "$Env:USERPROFILE\AppData\Local\Microsoft\Teams\Update.exe" --processStart="Teams.exe"
         ''';
         }
-        print(command);
+
         final res = await Process.run(
           'powershell',
           [

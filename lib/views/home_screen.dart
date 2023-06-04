@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
-import 'package:teams_multi_instances/views/text/header.dart';
 import 'package:teams_multi_instances/views/theme/theme_settings.dart';
 import 'package:teams_multi_instances/views/utils/error_snack_bar.dart';
 import 'package:teams_multi_instances/views/profiles/add_profile_button.dart';
@@ -48,15 +47,9 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: ListView(
-                  children: const [
-                    Center(child: Header(text: 'Theme Settings')),
-                    SizedBox(height: 16),
-                    SingleChildScrollView(child: ThemeSettings()),
-                  ],
-                ),
+              const Flexible(
+                flex: 1,
+                child: ThemeSettings(),
               ),
               const VerticalDivider(),
               BlocBuilder<ProfileBloc, ProfileState>(
@@ -66,16 +59,10 @@ class HomeScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is ProfileSuccessState) {
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: ListView(
-                        children: const [
-                          Center(child: Header(text: 'Teams Profiles')),
-                          SizedBox(height: 16),
-                          ProfileList(),
-                          SizedBox(height: 80),
-                        ],
-                      ),
+                    return const Flexible(
+                      fit: FlexFit.loose,
+                      flex: 2,
+                      child: ProfileList(),
                     );
                   } else {
                     return const SizedBox();
