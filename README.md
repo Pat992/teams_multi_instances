@@ -32,5 +32,6 @@ Multi Teams Launcher is an app that enables you to open multiple instances of Mi
 Please file feature requests and bugs at the [issue tracker](https://github.com/Pat992/teams_multi_instances/issues)
 
 ## Support
-If this project helps you, you can buy me a coffee.
+If this project helps you and you would like to support me, you can buy me a coffee.
+
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/patrickhettich)
