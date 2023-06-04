@@ -1,0 +1,44 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Flutter release
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-release-windows:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.2'
+          channel: 'stable'
+      - name: Install project dependencies
+        run: flutter pub get
+      - name: Generate intermediates
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+      - name: Enable windows build
+        run: flutter config --enable-windows-desktop
+      - name: Build artifacts
+        run: flutter build windows --release
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: teams_multi_instances-${{github.ref_name}}-windows.zip
+          directory: build/windows/runner/Release
+      - name: Windows Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: build/windows/runner/Release/teams_multi_instances-${{github.ref_name}}-windows.zip
