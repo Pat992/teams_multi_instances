@@ -126,11 +126,19 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
       try {
         emit(ProcessLoadingState());
 
-        final command = '''
+        String command = '';
+        if (event.profileModel.id != 'main_profile') {
+          command = '''
         \$teamsPath="\$Env:USERPROFILE\\AppData\\Local\\Microsoft\\Teams\\Update.exe"
         \$Env:USERPROFILE="${event.profileModel.profileFolder}\\%~n0"
         \$teamsPath --processStart "Teams.exe"
         ''';
+        } else {
+          command = '''
+        \$teamsPath="\$Env:USERPROFILE\\AppData\\Local\\Microsoft\\Teams\\Update.exe"
+        \$teamsPath --processStart "Teams.exe"
+        ''';
+        }
 
         final res = await Process.run(
           'powershell',

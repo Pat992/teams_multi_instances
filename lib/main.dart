@@ -1,16 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
 import 'package:teams_multi_instances/views/home_screen.dart';
 import 'package:teams_multi_instances/injection.dart' as injection;
+import 'package:window_manager/window_manager.dart';
 import 'bloc/theme/theme_bloc.dart';
 import 'injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await injection.init();
+
+  await windowManager.ensureInitialized();
+  if (Platform.isWindows) {
+    WindowManager.instance.setSize(const Size(1280, 720));
+    WindowManager.instance.setMinimumSize(const Size(1280, 720));
+  }
+
   runApp(const App());
 }
 
@@ -25,17 +34,11 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) =>
-            getIt<ThemeBloc>()
-              ..add(ThemeInitEvent())),
+            create: (context) => getIt<ThemeBloc>()..add(ThemeInitEvent())),
         BlocProvider(
-            create: (context) =>
-            getIt<ProfileBloc>()
-              ..add(ProfileListEvent())),
+            create: (context) => getIt<ProfileBloc>()..add(ProfileListEvent())),
         BlocProvider(
-            create: (context) =>
-            getIt<ProcessBloc>()
-              ..add(ProcessInitEvent())),
+            create: (context) => getIt<ProcessBloc>()..add(ProcessInitEvent())),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
@@ -48,13 +51,13 @@ class App extends StatelessWidget {
             theme: ThemeData(
               bottomNavigationBarTheme: isDarkTheme && seedColor != Colors.black
                   ? BottomNavigationBarThemeData(
-                selectedItemColor: seedColor,
-              )
+                      selectedItemColor: seedColor,
+                    )
                   : null,
               colorScheme: ColorScheme.fromSeed(
                 seedColor: seedColor,
                 brightness:
-                isDarkTheme == true ? Brightness.dark : Brightness.light,
+                    isDarkTheme == true ? Brightness.dark : Brightness.light,
               ),
               useMaterial3: true,
             ),

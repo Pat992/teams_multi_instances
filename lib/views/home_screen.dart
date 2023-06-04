@@ -73,6 +73,7 @@ class HomeScreen extends StatelessWidget {
                           Center(child: Header(text: 'Teams Profiles')),
                           SizedBox(height: 16),
                           ProfileList(),
+                          SizedBox(height: 80),
                         ],
                       ),
                     );

@@ -17,6 +17,7 @@ class ProfileListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       key: Key(profileModel.id),
       child: InkWell(
         mouseCursor: SystemMouseCursors.click,
@@ -27,28 +28,33 @@ class ProfileListItem extends StatelessWidget {
           mouseCursor: SystemMouseCursors.click,
           leading: const Icon(Icons.account_circle),
           title: Text(profileModel.profileName),
-          subtitle: Text('Directory: ${profileModel.profileFolder}'),
+          subtitle: profileModel.id != 'main_profile'
+              ? Text('Directory: ${profileModel.profileFolder}')
+              : null,
           trailing: SizedBox(
             width: 80,
             child: Row(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.folder),
-                  onPressed: () =>
-                      BlocProvider.of<ProcessBloc>(context, listen: false).add(
-                    ProcessOpenDirectoryEvent(profileModel: profileModel),
+                if (profileModel.id != 'main_profile')
+                  IconButton(
+                    icon: const Icon(Icons.folder),
+                    onPressed: () =>
+                        BlocProvider.of<ProcessBloc>(context, listen: false)
+                            .add(
+                      ProcessOpenDirectoryEvent(profileModel: profileModel),
+                    ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
+                if (profileModel.id != 'main_profile')
+                  IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => DialogOpener.openDialog(
+                      dialog: DeleteProfileDialog(profileModel: profileModel),
+                      context: context,
+                    ),
                   ),
-                  onPressed: () => DialogOpener.openDialog(
-                    dialog: DeleteProfileDialog(profileModel: profileModel),
-                    context: context,
-                  ),
-                ),
               ],
             ),
           ),
