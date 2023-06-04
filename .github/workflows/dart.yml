@@ -5,6 +5,9 @@
 
 name: Flutter release
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ "master" ]
