@@ -59,6 +59,7 @@ class ThemeSettings extends StatelessWidget {
                     data: Theme.of(context)
                         .copyWith(dividerColor: Colors.transparent),
                     child: ExpansionTile(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       title: const Text('Colors'),
                       children: [
                         const SizedBox(height: 10),

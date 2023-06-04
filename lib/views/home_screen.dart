@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
           title: const Row(
             children: [
               Icon(Icons.account_circle),
-              Text('Multi Teams Instances'),
+              Text('Multi Teams Launcher'),
             ],
           ),
         ),

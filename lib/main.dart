@@ -18,6 +18,7 @@ void main() async {
   if (Platform.isWindows) {
     WindowManager.instance.setSize(const Size(1280, 720));
     WindowManager.instance.setMinimumSize(const Size(1280, 720));
+    WindowManager.instance.setTitle('Multi Teams Launcher');
   }
 
   runApp(const App());
@@ -47,7 +48,7 @@ class App extends StatelessWidget {
             seedColor = state.themeModel.color;
           }
           return MaterialApp(
-            title: 'Multi Teams Instances',
+            title: 'Multi Teams Launcher',
             theme: ThemeData(
               bottomNavigationBarTheme: isDarkTheme && seedColor != Colors.black
                   ? BottomNavigationBarThemeData(
