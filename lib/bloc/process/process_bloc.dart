@@ -130,7 +130,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         if (event.profileModel.id != 'main_profile') {
           command = '''
         \$oldProfile=\$Env:USERPROFILE
-        \$Env:USERPROFILE="${event.profileModel.profileFolder}\\%~n0"
+        \$Env:USERPROFILE="${event.profileModel.profileFolder}"
         Start-Process "\$oldProfile\\AppData\\Local\\Microsoft\\Teams\\Update.exe" --processStart="Teams.exe"
         ''';
         } else {
