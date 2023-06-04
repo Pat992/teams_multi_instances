@@ -4,7 +4,7 @@
 </div>
 
 <div align="center">
-<a href="https://github.com/Pat992/teams_multi_instances/releases/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="50" role="img" aria-label="Download"><title>Download</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="150" height="50" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="0" height="50" fill="#dfb317"/><rect x="0" width="150" height="50" fill="#dfb317"/><rect width="150" height="50" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="210"><text x="750" y="320" transform="scale(.1)" fill="#fff" textLength="1100">Download</text></g></svg></a>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="50" role="img" aria-label="Download"><title>Download</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="150" height="50" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="0" height="50" fill="#dfb317"/><rect x="0" width="150" height="50" fill="#dfb317"/><rect width="150" height="50" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="210"><text x="750" y="320" transform="scale(.1)" fill="#fff" textLength="1100">Download</text></g></svg>
 </div>
 
 ## About
