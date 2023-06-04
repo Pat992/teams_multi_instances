@@ -19,9 +19,10 @@ Multi Teams Launcher is an app that enables you to open multiple instances of Mi
 
 ## Features
 - Open multiple instances of Microsoft Teams.
-- Log in with different accounts.
+- Log in to Teams with different accounts.
 - Manage profiles:
-    - View profile settings directory.
+    - Create as many Teams profiles as you like.
+    - View the profile settings directories.
     - Delete profiles.
 - Start specific Teams instances or all instances together.
 - Personalization options:
