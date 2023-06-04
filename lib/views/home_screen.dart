@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teams_multi_instances/bloc/process/process_bloc.dart';
 import 'package:teams_multi_instances/bloc/profile/profile_bloc.dart';
+import 'package:teams_multi_instances/views/app_bar/app_bar_action.dart';
+import 'package:teams_multi_instances/views/app_bar/app_bar_title.dart';
 import 'package:teams_multi_instances/views/theme/theme_settings.dart';
 import 'package:teams_multi_instances/views/utils/error_snack_bar.dart';
 import 'package:teams_multi_instances/views/profiles/add_profile_button.dart';
@@ -35,16 +37,11 @@ class HomeScreen extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Row(
-            children: [
-              Image.asset(
-                'assets/images/Icon.png',
-                height: 50,
-              ),
-              const SizedBox(width: 10),
-              const Text('Multi Teams Launcher'),
-            ],
-          ),
+          title: const AppBarTitle(),
+          actions: const [
+            AppBarAction(),
+            SizedBox(width: 5),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
