@@ -8,16 +8,10 @@
 </div>
 
 <div align="center">
-<table>
-    <tr>
-        <th>App</th>
-        <th>Themes</th>
-    </tr>
-    <tr>
-        <td><img src="/docs/images/App.png" width="700" /></td>
-        <td><img src="/docs/images/Themes.png" width="700" /></td>
-    </tr>
-</table>
+    <h4>App</h4>
+    <img src="/docs/images/App.png" width="700" />
+    <h4>Themes</h4>
+    <img src="/docs/images/Themes.png" width="700" />
 </div>
 
 ## Introduction
