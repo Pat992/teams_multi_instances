@@ -35,7 +35,6 @@ jobs:
           directory: build/windows/runner/Release
       - name: Windows Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
