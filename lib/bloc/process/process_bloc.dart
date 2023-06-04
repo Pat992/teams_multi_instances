@@ -104,7 +104,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
 
         final res = await Process.run(
           'powershell',
-          ['rmdir ${event.profileModel.profileFolder}'],
+          ['rmdir -Path ${event.profileModel.profileFolder} -Recurse'],
         );
 
         if (res.stderr != null && res.stderr != '') {
@@ -129,17 +129,16 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
         String command = '';
         if (event.profileModel.id != 'main_profile') {
           command = '''
-        \$teamsPath="\$Env:USERPROFILE\\AppData\\Local\\Microsoft\\Teams\\Update.exe"
+        \$oldProfile=\$Env:USERPROFILE
         \$Env:USERPROFILE="${event.profileModel.profileFolder}\\%~n0"
-        \$teamsPath --processStart "Teams.exe"
+        Start-Process "\$oldProfile\\AppData\\Local\\Microsoft\\Teams\\Update.exe" --processStart="Teams.exe"
         ''';
         } else {
-          command = '''
-        \$teamsPath="\$Env:USERPROFILE\\AppData\\Local\\Microsoft\\Teams\\Update.exe"
-        \$teamsPath --processStart "Teams.exe"
+          command = r'''
+        Start-Process "$Env:USERPROFILE\AppData\Local\Microsoft\Teams\Update.exe" --processStart="Teams.exe"
         ''';
         }
-
+        print(command);
         final res = await Process.run(
           'powershell',
           [
