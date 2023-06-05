@@ -8,11 +8,7 @@ name: Flutter release
 permissions:
   contents: write
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [workflow_dispatch]
 
 jobs:
   build-and-release-windows:
